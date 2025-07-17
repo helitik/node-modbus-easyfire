@@ -39,6 +39,12 @@ registerMap.forEach((reg) => {
   });
 });
 
+// create gauge for last scrape timestamp
+export const lastScrapeTimestamp = new client.Gauge({
+  name: 'modbus_last_scrape_timestamp',
+  help: 'UNIX timestamp of the last successful Modbus scrape',
+});
+
 /**
  * Update all Prometheus gauges based on the latest Modbus read values.
  * @param {Object} values - Mapping from register names to numeric or {value, unit}.
@@ -51,7 +57,5 @@ export function updateMetrics(values) {
     const numeric = typeof val === 'object' ? val.value : val;
     gauge.set(numeric);
   });
+  lastScrapeTimestamp.set(Math.floor(Date.now() / 1000));
 }
-
-// Optional: expose default metrics (nodejs process, GC, etc.)
-client.collectDefaultMetrics();
