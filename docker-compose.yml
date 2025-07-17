@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  modbus-easyfire:
+    container_name: modbus-easyfire
+    build: .
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      #- MODBUS_HOST=192.168.1.xx
+      #- MODBUS_PORT=502
+      #- MODBUS_UNIT_ID=2
+      #- HTTP_PORT=3000
+      #- SCRAPE_INTERVAL=30
