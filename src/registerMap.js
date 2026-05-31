@@ -89,4 +89,19 @@ export const registerMap = [
   { offset: 2447, name: 'HC2RoomTemperature', type: 'int16', unit: '°C' },
   { offset: 2448, name: 'HC2ActualFF', type: 'int16', unit: '°C' },
   { offset: 2449, name: 'HC2Pump', type: 'int16', unit: '°C' },
+
+  // Heating-circuit / DHCW program registers (KWB doc "write" sheet, offsets 2490-2494).
+  // R/W registers but read-only here (readHoldingRegisters) -> no write risk.
+  // HC1Program @2493 = active schedule profile of our circuit (0=Prog 1, 1=Prog 2),
+  // NOT the operating mode; only relevant when the room corrector is set to "prog".
+  { offset: 2491, name: 'DHCW0Program', type: 'int16' },
+  { offset: 2492, name: 'HC0Program', type: 'int16' },
+  { offset: 2493, name: 'HC1Program', type: 'int16' },
+  { offset: 2494, name: 'HC2Program', type: 'int16' },
+
+  // REVERSE-ENGINEERED registers (not in KWB docs) — ~1500 bank read by the native webUI.
+  // ⚠️ Undocumented -> not guaranteed stable across KWB firmware versions.
+  // Used by the DIY thermostat project: readback of operating mode + active setpoint.
+  { offset: 1512, name: 'HC1OperatingState', type: 'int16' }, // 0=night, 1=day, 3=off (frost protection)
+  { offset: 1515, name: 'HC1RoomReferenceActive', type: 'int16', unit: '°C' }, // active room setpoint /10 (21/19/8)
 ];
