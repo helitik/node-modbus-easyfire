@@ -8,7 +8,7 @@ function shouldLog(level) {
 
 export const logger = {
   error: (...args) => shouldLog('error') && console.error(...args),
-  warn:  (...args) => shouldLog('warn')  && console.warn(...args),
-  info:  (...args) => shouldLog('info')  && console.log(...args),
+  warn: (...args) => shouldLog('warn') && console.warn(...args),
+  info: (...args) => shouldLog('info') && console.log(...args),
   debug: (...args) => shouldLog('debug') && console.debug(...args),
 };

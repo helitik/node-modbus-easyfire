@@ -14,3 +14,4 @@ services:
       - HTTP_PORT=${HTTP_PORT}
       - SCRAPE_INTERVAL=${SCRAPE_INTERVAL}
       - LOG_LEVEL=${LOG_LEVEL}
+      - WRITE_TOKEN=${WRITE_TOKEN:-}

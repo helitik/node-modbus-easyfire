@@ -38,7 +38,7 @@ export async function readAll() {
           const last = block[block.length - 1];
           const wordCount = last.type === 'int32' || last.type === 'uint32' ? 2 : 1;
 
-          if (next.offset <= blockEnd + wordCount && (next.offset - blockStart) < maxBlockSize) {
+          if (next.offset <= blockEnd + wordCount && next.offset - blockStart < maxBlockSize) {
             block.push(next);
             blockEnd = next.offset;
           } else {

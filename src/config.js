@@ -11,3 +11,6 @@ export const MODBUS_OPTIONS = {
 export const HTTP_PORT = parseInt(process.env.HTTP_PORT || '3000', 10);
 export const SCRAPE_INTERVAL = parseInt(process.env.SCRAPE_INTERVAL || '60', 10);
 export const LOG_LEVEL = process.env.LOG_LEVEL || 'info';
+// Optional bearer token required on write endpoints (POST /references).
+// Empty/unset = writes allowed without auth (LAN-only deployments).
+export const WRITE_TOKEN = process.env.WRITE_TOKEN || '';

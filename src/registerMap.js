@@ -104,4 +104,10 @@ export const registerMap = [
   // Used by the DIY thermostat project: readback of operating mode + active setpoint.
   { offset: 1512, name: 'HC1OperatingState', type: 'int16' }, // 0=night, 1=day, 3=off (frost protection)
   { offset: 1515, name: 'HC1RoomReferenceActive', type: 'int16', unit: '°C' }, // active room setpoint /10 (21/19/8)
+
+  // REVERSE-ENGINEERED parameter bank (~4000): per-circuit stored parameters, blocks of 28
+  // registers. Located 2026-09-01 by differential scan against a portal change; writable
+  // via FC06 (see src/references.js and the /references endpoint).
+  { offset: 4035, name: 'HC1ReferenceTemperatureDay', type: 'int16', unit: '°C' }, // stored day reference /10
+  { offset: 4036, name: 'HC1ReferenceTemperatureNight', type: 'int16', unit: '°C' }, // stored night reference /10
 ];
