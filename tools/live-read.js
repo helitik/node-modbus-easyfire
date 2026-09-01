@@ -1,14 +1,14 @@
-// Lecteur Modbus LIVE pour le thermostat KWB DIY (calibration / dithering).
-// Lit en direct HC1RoomTemperature (2443), HC1OperatingState (1512),
-// HC1RoomReferenceActive (1515) — SANS passer par le scraper 60 s.
+// LIVE Modbus reader for the KWB DIY thermostat (calibration / dithering).
+// Reads HC1RoomTemperature (2443), HC1OperatingState (1512) and
+// HC1RoomReferenceActive (1515) directly — WITHOUT going through the scraper cache.
 //
-// Usage :
-//   node tools/live-read.js              -> une lecture, format "ts raw_room state raw_setp"
-//   node tools/live-read.js --json       -> une lecture JSON
-//   node tools/live-read.js --watch [s]  -> streaming toutes les s secondes (défaut 2)
+// Usage:
+//   node tools/live-read.js              -> one read, format "ts raw_room state raw_setp"
+//   node tools/live-read.js --json       -> one read as JSON
+//   node tools/live-read.js --watch [s]  -> streaming every s seconds (default 2)
 //
-// Connexion réutilisée depuis le projet (.env / config). Socket transitoire par
-// lecture (comme l'exporter) → cohabite avec le scraper.
+// Connection settings reused from the project (.env / config). Transient socket
+// per read (like the exporter) -> coexists with the scraper.
 
 import Modbus from 'jsmodbus';
 import net from 'net';

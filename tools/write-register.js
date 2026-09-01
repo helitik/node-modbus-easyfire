@@ -1,7 +1,7 @@
-// Écriture d'UN registre (FC06) — outil de test, à n'utiliser que sur des
-// registres identifiés comme paramètres (banc 4000+), jamais sur des mesures.
-// Usage : node tools/write-register.js <addr> <valeur>
-// Relit le registre avant et après, n'écrit que sur confirmation --yes.
+// Writes ONE register (FC06) — test tool, to be used only on registers
+// identified as parameters (4000+ bank), never on measurements.
+// Usage: node tools/write-register.js <addr> <value>
+// Reads the register before and after, writes only with the --yes flag.
 
 import Modbus from 'jsmodbus';
 import net from 'net';
@@ -11,7 +11,7 @@ const addr = parseInt(process.argv[2], 10);
 const value = parseInt(process.argv[3], 10);
 const yes = process.argv.includes('--yes');
 if (isNaN(addr) || isNaN(value)) {
-  console.error('usage: write-register.js <addr> <valeur> --yes');
+  console.error('usage: write-register.js <addr> <value> --yes');
   process.exit(1);
 }
 
@@ -31,24 +31,24 @@ socket.connect(MODBUS_OPTIONS.port, MODBUS_OPTIONS.host, async () => {
     const before = (
       await client.readHoldingRegisters(addr, 1)
     ).response._body._valuesAsBuffer.readInt16BE(0);
-    console.log(`avant : ${addr} = ${before}`);
+    console.log(`before: ${addr} = ${before}`);
     if (!yes) {
-      console.log('(dry-run, ajoute --yes pour écrire)');
+      console.log('(dry-run, add --yes to write)');
       process.exit(0);
     }
     const w = await client.writeSingleRegister(addr, value);
     console.log(
-      `write : FC06 ${addr} <- ${value} : réponse ${JSON.stringify(w.response._body._value ?? w.response._body)}`,
+      `write : FC06 ${addr} <- ${value} : response ${JSON.stringify(w.response._body._value ?? w.response._body)}`,
     );
     const after = (
       await client.readHoldingRegisters(addr, 1)
     ).response._body._valuesAsBuffer.readInt16BE(0);
-    console.log(`après : ${addr} = ${after}`);
+    console.log(`after : ${addr} = ${after}`);
     clearTimeout(timer);
     socket.end();
     process.exit(0);
   } catch (e) {
-    console.error('ERREUR:', e.err || e.message || JSON.stringify(e).slice(0, 200));
+    console.error('ERROR:', e.err || e.message || JSON.stringify(e).slice(0, 200));
     clearTimeout(timer);
     socket.destroy();
     process.exit(3);

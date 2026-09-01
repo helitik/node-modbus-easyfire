@@ -1,7 +1,7 @@
-// Sonde READ-ONLY de registres arbitraires — test banc Comfort 4 (8000+/24000+).
-// Usage : node tools/probe-registers.js <[fc:]addr[:count]> [...]   fc = 3 (holding, défaut) ou 4 (input)
-// Chaque adresse est lue individuellement ; une exception Modbus (illegal
-// address) est rapportée, pas fatale.
+// READ-ONLY probe of arbitrary registers — used to test the Comfort 4 bank (8000+/24000+).
+// Usage: node tools/probe-registers.js <[fc:]addr[:count]> [...]   fc = 3 (holding, default) or 4 (input)
+// Each address is read individually; a Modbus exception (illegal address)
+// is reported, not fatal.
 
 import Modbus from 'jsmodbus';
 import net from 'net';
@@ -45,6 +45,6 @@ for (const arg of process.argv.slice(2)) {
       ? [parts[0], parts[1], parts[2] || 1]
       : [3, parts[0], parts[1] || 1];
   const res = await readReg(a, c, fc);
-  if (res.err) console.log(`FC${fc} @${res.addr}: ERREUR ${res.err}`);
+  if (res.err) console.log(`FC${fc} @${res.addr}: ERROR ${res.err}`);
   else console.log(`FC${fc} @${res.addr}: ${res.vals.join(', ')}`);
 }
