@@ -7,8 +7,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "lint": "eslint src --ext .js",
-    "lint:fix": "eslint src --ext .js --fix"
+    "lint": "eslint src tools --ext .js",
+    "lint:fix": "eslint src tools --ext .js --fix"
   },
   "dependencies": {
     "dotenv": "^17.2.0",

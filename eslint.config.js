@@ -7,7 +7,7 @@ import { defineConfig } from "eslint/config";
 
 export default defineConfig([
   {
-    files: ["src/**/*.{js,mjs}"],
+    files: ["src/**/*.{js,mjs}", "tools/**/*.{js,mjs}"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
